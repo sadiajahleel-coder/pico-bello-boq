@@ -42,3 +42,5 @@ coverage/
 # Uploads (use Cloudinary, never store locally)
 uploads/
 tmp/
+
+.env
