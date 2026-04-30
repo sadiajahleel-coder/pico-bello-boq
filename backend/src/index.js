@@ -1,4 +1,4 @@
-require('dotenv').config();
+﻿require('dotenv').config();
 require('express-async-errors');
 
 const express = require('express');
@@ -50,6 +50,10 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.get('/', (_req, res) => {
+  res.json({ status: 'ok', service: 'Pico Bello BOQ API', version: '1.0.0' });
+});
+
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', service: 'pico-bello-boq-api', timestamp: new Date().toISOString() });
 });
@@ -83,3 +87,4 @@ app.use((err, _req, res, _next) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Pico Bello BOQ API running on port ${PORT}`));
+
