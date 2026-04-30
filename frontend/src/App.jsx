@@ -1,6 +1,6 @@
-﻿import React from 'react';
+import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './context/AuthContext';
+import { AuthProvider } from './context/AuthContext';
 import AppLayout from './components/layout/AppLayout';
 import ProtectedRoute from './components/ProtectedRoute';
 import Landing from './pages/Landing';
@@ -24,24 +24,21 @@ import ProgressTracker from './pages/ProgressTracker';
 import ChangeOrders from './pages/ChangeOrders';
 import Analytics from './pages/Analytics';
 
-function PublicRoute({ children }) {
-  const { user, loading } = useAuth();
-  if (loading) return (
-    <div className="flex items-center justify-center min-h-screen bg-primary-900">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white" />
-    </div>
-  );
-  return user ? <Navigate to="/app/dashboard" replace /> : children;
-}
-
 export default function App() {
   return (
     <AuthProvider>
       <Routes>
-        <Route path="/" element={<PublicRoute><Landing /></PublicRoute>} />
-        <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-        <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
-        <Route path="/app" element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
+        <Route path="/" element={<Landing />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route
+          path="/app"
+          element={
+            <ProtectedRoute>
+              <AppLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<Navigate to="/app/dashboard" replace />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="projects" element={<Projects />} />
