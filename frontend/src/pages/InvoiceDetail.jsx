@@ -126,7 +126,10 @@ export default function InvoiceDetail() {
     load();
   };
 
-  const openPDF = () => window.open(`/api/invoices/${id}/pdf`, '_blank');
+  const openPDF = () => {
+    const base = (import.meta.env.VITE_API_URL || '/api').replace(/\/api\/?$/, '');
+    window.open(`${base}/api/invoices/${id}/pdf`, '_blank');
+  };
 
   if (loading) return <div className="text-center py-20 text-gray-400">Loading invoice…</div>;
   if (!data) return <div className="text-center py-20 text-red-500">Invoice not found</div>;
@@ -177,7 +180,7 @@ export default function InvoiceDetail() {
             <p className="text-blue-200 text-xs">Due: {fmtDate(invoice.dueDate)}</p>
           </div>
         </div>
-        <div className="mt-4 grid grid-cols-3 gap-4">
+        <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <p className="text-blue-400 text-xs">Total</p>
             <p className="text-xl font-bold">{invoice.currency} {fmt(invoice.total)}</p>
